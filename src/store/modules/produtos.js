@@ -15,16 +15,28 @@ export default {
             // },
         ],
     },
-    getters:{
-        ValorTotal(state){
+    getters: {
+        ValorTotal(state) {
             return state.produtos.map(item => item.preco * item.quantidade).reduce((total, subtotal) => total + subtotal, 0)
         }
     },
-    mutations:{
-        cadastrarProduto(state, payLoad){
-            state.produtos.push(payLoad);
+    mutations: {
+        cadastrarProduto(state, payLoad) {
+            const todosCamposPreenchidos= Object.values(payLoad).every(
+                campo => campo !== null && campo !== ''
+            )
+            if (todosCamposPreenchidos)
+                if (state.produtos == undefined) {
+                    state.produtos.push(payLoad);
+                } else {
+                    const sameCode = t => t.codigo === payLoad.codigo;
+                    const reallyNew = state.produtos.filter(sameCode);
+                    if (reallyNew == 0) {
+                        state.produtos.push(payLoad);
+                    }
+                }
         },
-        removerProduto(state, payLoad){ 
+        removerProduto(state, payLoad) {
             const index = state.produtos.findIndex((item) => item.codigo === payLoad.codigo);
 
             if (index !== -1) {
@@ -32,11 +44,11 @@ export default {
             }
         }
     },
-    actions:{
-        cadastrarProduto(context, payLoad){
-            context.commit('cadastrarProduto',payLoad)
+    actions: {
+        cadastrarProduto(context, payLoad) {
+            context.commit('cadastrarProduto', payLoad)
         },
-        removerProduto(context, payLoad){
+        removerProduto(context, payLoad) {
             context.commit('removerProduto', payLoad)
         }
     }

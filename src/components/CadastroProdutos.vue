@@ -1,7 +1,7 @@
 <template>
     <div class = "cadastro">
       <h2>Cadastro de Produto</h2>
-      <form @submit.prevent="cadastrarProduto" class="product-form">
+      <form @submit.prevent="cadastrar" class="product-form">
 
         <div class = "form-group">
           <label for="codigo">Código:</label>
@@ -36,6 +36,15 @@
   import { mapActions } from "vuex";
 
   export default {
+    data(){
+      return {
+        codigo: "",
+        nome: "",
+        descricao: "",
+        preco: null,
+        foto: "",
+      }
+    },
     methods: {
       ...mapActions(['cadastrarProduto']),
       cadastrar() {
