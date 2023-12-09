@@ -41,7 +41,7 @@
         codigo: "",
         nome: "",
         descricao: "",
-        preco: "",
+        preco: null,
         foto: "",
       }
     },

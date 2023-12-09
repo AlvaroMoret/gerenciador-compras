@@ -22,15 +22,19 @@ export default {
     },
     mutations: {
         cadastrarProduto(state, payLoad) {
-            if (state.produtos == undefined) {
-                state.produtos.push(payLoad);
-            } else {
-                const sameCode = t => t.codigo === payLoad.codigo;
-                const reallyNew = state.produtos.filter(sameCode);
-                if (reallyNew == 0) {
+            const todosCamposPreenchidos= Object.values(payLoad).every(
+                campo => campo !== null && campo !== ''
+            )
+            if (todosCamposPreenchidos)
+                if (state.produtos == undefined) {
                     state.produtos.push(payLoad);
+                } else {
+                    const sameCode = t => t.codigo === payLoad.codigo;
+                    const reallyNew = state.produtos.filter(sameCode);
+                    if (reallyNew == 0) {
+                        state.produtos.push(payLoad);
+                    }
                 }
-            }
         },
         removerProduto(state, payLoad) {
             const index = state.produtos.findIndex((item) => item.codigo === payLoad.codigo);
