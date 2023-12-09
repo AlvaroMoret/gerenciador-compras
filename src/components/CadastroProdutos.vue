@@ -36,6 +36,15 @@
   import { mapActions } from "vuex";
 
   export default {
+    data(){
+      return {
+        codigo: "",
+        nome: "",
+        descricao: "",
+        preco: "",
+        foto: "",
+      }
+    },
     methods: {
       ...mapActions(['cadastrarProduto']),
       cadastrar() {
