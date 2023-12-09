@@ -27,7 +27,11 @@
       },
       methods: {
         adicionarProduto(produto) {
-          this.listaProdutos.push(produto)
+          this.listaProdutos.push({codigo: produto.codigo,
+          nome: produto.nome,
+          descricao: produto.descricao,
+          preco: produto.preco,
+          foto: produto.foto})
         },
 
         adicionarAoCarrinho(produto) {
