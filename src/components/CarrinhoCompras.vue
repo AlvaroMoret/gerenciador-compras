@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="cart-container">
       <h2>Carrinho de Compras</h2>
         <p>
             Quantidade de Produtos no Carrinho: {{ qtdProdutosCarrinho }}
@@ -7,8 +7,8 @@
         <p>
             Valor Total: {{ valorTotal | formatPreco }}
         </p>
-      <ul>
-        <li v-for="item in carrinho" :key="item.produto.codigo">
+      <ul class="cart-list">
+        <li class="cart-item" v-for="item in carrinho" :key="item.produto.codigo">
             <strong>Produto:</strong> {{ item.produto.nome }}<br />
             <strong>Quantidade:</strong> {{ item.quantidade }}<br />
             <strong>Subtotal:</strong> {{ item.subtotal | formatPreco }}<br />
@@ -54,6 +54,42 @@
   </script>
   
   <style scoped>
-  /* Adicione estilos conforme necessário */
+.cart-container{
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   color: #333
+}
+
+
+.cart-list{
+  list-style: none;
+  padding: 0;
+}
+
+.cart-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #c82333;
+}
   </style>
   
