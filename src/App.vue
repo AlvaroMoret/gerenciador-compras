@@ -19,57 +19,6 @@
     export default {
       name: 'App',
       components: { CadastroProdutos, ListaProdutos, CarrinhoCompras },
-      data() {
-        return {
-          listaProdutos: [],
-          carrinho: [],
-        }
-      },
-      methods: {
-        adicionarProduto(produto) {
-          this.listaProdutos.push({codigo: produto.codigo,
-          nome: produto.nome,
-          descricao: produto.descricao,
-          preco: produto.preco,
-          foto: produto.foto})
-        },
-
-        adicionarAoCarrinho(produto) {
-          const itemExistente = this.carrinho.find(item => item.produto.codigo === produto.codigo);
-
-          if (itemExistente) {
-            itemExistente.quantidade++;
-          }else{
-            this.carrinho.push({
-              produto,
-              quantidade: 1,
-              subtotal: produto.preco,
-            });
-          }
-          
-        },
-
-        excluirProduto(produto) {
-          // Lógica para excluir um produto da lista de disponíveis
-          const index = this.listaProdutos.findIndex((p) => p.codigo === produto.codigo);
-
-          if (index !== -1) {
-            this.listaProdutos.splice(index, 1);
-          }
-
-          // Lógica para excluir o produto do carrinho, se estiver presente
-          this.removerDoCarrinho(produto);
-        },
-
-        removerDoCarrinho(produto) {
-          // Lógica para remover um produto do carrinho
-          const index = this.carrinho.findIndex((item) => item.produto.codigo === produto.codigo);
-
-          if (index !== -1) {
-            this.carrinho.splice(index, 1);
-          }
-        }
-      }
     }
   </script>
 

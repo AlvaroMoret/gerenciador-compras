@@ -1,24 +1,58 @@
 export default {
     state: {
-        produtos: [],
+        produtosCarrinho: [],
     },
     getters:{
-        total(state){
-            return state.produtos.map(p => p.quantidade * p.preco)
-            .reduce((total, atual) => total + atual, 0)
+        ValorTotal(state){
+            return state.produtosCarrinho.map(item => item.preco * item.quantidade).reduce((total, subtotal) => total + subtotal, 0)
+        },
+        qtdProdutosCarrinho(state){
+            return state.produtosCarrinho.reduce((total, item) => total + item.quantidade, 0)
         }
     },
     mutations:{
-        adicionaProduto(state, payLoad /*produto*/){
-            state.produtos.push(payLoad);
+        comprarProduto(state, produto){
+            const itemExistente = state.produtosCarrinho.find(item => item.produto.codigo === produto.codigo);
+
+            if (itemExistente) {
+                itemExistente.quantidade++;
+            }else{
+                state.produtosCarrinho.push({
+                    produto,
+                    quantidade: 1,
+                    preco: produto.preco,
+                })
+            }
+        },
+        removerDoCarrinho(state, payLoad){
+            const index = state.produtosCarrinho.findIndex((item) => item.produto.codigo === payLoad.codigo);
+
+            if (index !== -1) {
+                if(state.produtosCarrinho[index].quantidade > 1){
+                    state.produtosCarrinho[index].quantidade--;
+                }else{
+                    state.produtosCarrinho.splice(index, 1);
+                }
+            }
+        },
+        removerCarrinhoDireto(state, payLoad){
+            const index = state.produtosCarrinho.findIndex((item) => item.produto.codigo === payLoad.codigo);
+
+            if (index !== -1) {
+                state.produtosCarrinho.splice(index, 1);
+            }
         }
     },
     actions:{
-        adicionaProduto(context, payLoad){
-            setTimeout(() =>{
-                // tratamento desejado
-                context.commit('adicionaProduto',payLoad)
-            },0)
+        comprarProduto(context, payLoad){
+            console.log('passou aqui')
+            context.commit('comprarProduto',payLoad)
+        },
+        removerDoCarrinho(context, payLoad){
+            context.commit('removerDoCarrinho', payLoad)
+        },
+        removerCarrinhoDireto(context, payLoad){
+            context.commit('removerCarrinhoDireto', payLoad)
         }
     }
 }

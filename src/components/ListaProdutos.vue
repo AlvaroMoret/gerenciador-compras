@@ -6,7 +6,7 @@
           <strong>Código:</strong> {{ produto.codigo }}<br />
           <strong>Nome:</strong> {{ produto.nome }}<br />
           <strong>Descrição:</strong> {{ produto.descricao }}<br />
-          <strong>Preço:</strong> {{ produto.preco | formatPreco }}<br />
+          <strong>Preço:</strong> {{ produto.preco | dinheiro }}<br />
           <strong>Foto:</strong>
           <img :src="produto.foto" alt="Foto do Produto" class="imagem" />
 
@@ -22,26 +22,19 @@
   
   <script>
   export default {
-    props: {
-      produtos: {
-        type: Array,
-        default: () => [],
-      },
-    },
-    filters: {
-      formatPreco(value) {
-        // Lógica para formatar o preço conforme necessário
-        return `R$ ${parseFloat(value).toFixed(2)}`.replace('.', ',');
-      },
+    computed:{
+        produtos(){
+            return this.$store.state.produtos.produtos
+        }
     },
     methods:{
         comprarProduto(produto){
-            // Lógica para comprar um produto
-            this.$emit("produtoComprado", produto)
+            this.$store.dispatch('comprarProduto', produto)
         },
         excluirProduto(produto){
-            // Lógica para excluir um produto
-            this.$emit("produtoExcluido", produto)
+            // Lógica para remover um produto do carrinho
+            this.$store.dispatch('removerProduto', produto)
+            this.$store.dispatch('removerCarrinhoDireto', produto)
         }
     }
   };

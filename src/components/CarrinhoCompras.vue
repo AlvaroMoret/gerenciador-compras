@@ -5,13 +5,13 @@
             Quantidade de Produtos no Carrinho: {{ qtdProdutosCarrinho }}
         </p>
         <p>
-            Valor Total: {{ valorTotal | formatPreco }}
+            Valor Total: {{ valorTotal | dinheiro }}
         </p>
       <ul class="cart-list">
         <li class="cart-item" v-for="item in carrinho" :key="item.produto.codigo">
             <strong>Produto:</strong> {{ item.produto.nome }}<br />
             <strong>Quantidade:</strong> {{ item.quantidade }}<br />
-            <strong>Subtotal:</strong> {{ item.subtotal | formatPreco }}<br />
+            <strong>Preco:</strong> {{ item.preco | dinheiro }}<br />
 
             <button @click="removerDoCarrinho(item.produto)">Remover Item</button>
         <hr />
@@ -21,33 +21,24 @@
   </template>
   
   <script>
+  import { mapGetters, mapActions } from "vuex";
+
   export default {
-    props: {
-      carrinho: {
-        type: Array,
-        default: () => [],
-      },
-    },
     computed:{
-        qtdProdutosCarrinho(){
-            // Lógica para calcular a quantidade de produtos no carrinho
-            return this.carrinho.reduce((total, item) => total + item.quantidade, 0)
+      ...mapGetters({
+        qtdProdutosCarrinho: "qtdProdutosCarrinho",
+        valorTotal: "ValorTotal",
+      }),
+        carrinho(){
+            // Lógica para pegar o carrinho de compras
+            return this.$store.state.carrinho.produtosCarrinho
         },
-        valorTotal(){
-            // Lógica para calcular o valor total do carrinho
-            return this.carrinho.reduce((total, item) => total + item.subtotal, 0)
-        }
-    },
-    filters: {
-      formatPreco(value) {
-        // Lógica para formatar o preço conforme necessário
-        return `R$ ${parseFloat(value).toFixed(2)}`.replace('.', ',');
-      },
     },
     methods:{
+        ...mapActions(['removerDoCarrinho']),
         removerDoCarrinho(produto){
             // Lógica para remover um produto do carrinho
-            this.$emit("produtoRemovido", produto)
+            this.$store.dispatch('removerDoCarrinho', produto)
         }
     }
   };

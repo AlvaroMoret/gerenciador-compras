@@ -5,19 +5,19 @@
 
         <div class = "form-group">
           <label for="codigo">Código:</label>
-          <input v-model="produto.codigo" type="text" id="codigo" required />
+          <input v-model="codigo" type="text" id="codigo" required />
         </div>
         <div class = "form-group">
           <label for="nome">Nome:</label>
-          <input v-model="produto.nome" type="text" id="nome" required />
+          <input v-model="nome" type="text" id="nome" required />
         </div>
         <div class = "form-group">
           <label for="descricao">Descrição:</label>
-          <textarea v-model="produto.descricao" id="descricao" required></textarea>
+          <textarea v-model="descricao" id="descricao" required></textarea>
         </div>
         <div class = "form-group">
           <label for="preco">Preço Unitário:</label>
-          <input v-model="produto.preco" type="number" step="0.01" id="preco" required />
+          <input v-model="preco" type="number" step="0.01" id="preco" required />
         </div>
         <div class = "form-group">
           <label  for="foto">Foto do Produto:</label>
@@ -26,36 +26,33 @@
             <span> Selecionar arquivo</span>
           </label>
         </div>
-        <button class="botao-cadastrar" @click="cadastrarProduto">Cadastrar Produto</button>
+        <button class="botao-cadastrar" @click="cadastrar">Cadastrar Produto</button>
       </form>
     </div>
   </template>
   
   <script>
+
+  import { mapActions } from "vuex";
+
   export default {
-    data() {
-      return {
-        produto: {
-          codigo: "",
-          nome: "",
-          descricao: "",
-          preco: 0,
-          foto: null,
-        },
-      };
-    },
     methods: {
-      cadastrarProduto() {
-        // Lógica para enviar os dados para o servidor ou realizar outras operações
-        this.$emit("produtoCadastrado", this.produto)
-        this.produto.codigo = "";
-        this.produto.nome = "";
-        this.produto.descricao = "";
-        this.produto.preco = 0;
+      ...mapActions(['cadastrarProduto']),
+      cadastrar() {
+        console.log('entrou')
+        const produto = {
+          codigo: this.codigo,
+          nome: this.nome,
+          descricao: this.descricao,
+          preco: this.preco,
+          foto: this.foto,
+        }
+
+        this.$store.dispatch('cadastrarProduto', produto)
+        
       },
       handleFotoChange(event) {
-        // Lógica para lidar com a seleção de uma foto
-        this.produto.foto = event.target.files[0];
+        this.foto = event.target.files[0];
       },
     },
   };
