@@ -3,18 +3,17 @@
       <h2>Lista de Produtos Cadastrados</h2>
       <ul class="lista-grid" >
         <li class="product-item" v-for="produto in produtos" :key="produto.codigo">
-          <strong>Código:</strong> {{ produto.codigo }}<br />
-          <strong>Nome:</strong> {{ produto.nome }}<br />
-          <strong>Descrição:</strong> {{ produto.descricao }}<br />
-          <strong>Preço:</strong> {{ produto.preco | dinheiro }}<br />
-          <strong>Foto:</strong>
-          <img :src="produto.foto" alt="Foto do Produto" class="imagem" />
+          <div class="info-produto">
+            <p><strong>Código:</strong> {{ produto.codigo }}</p>
+            <p><strong>Nome:</strong> {{ produto.nome }}</p>
+            <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
+            <p><strong>Preço:</strong> {{ produto.preco | dinheiro }}</p>
+          </div>
 
           <div class="button-container">
             <button id="excluir" @click="excluirProduto(produto)">Excluir</button>
             <button @click="comprarProduto(produto)">Comprar</button>          
           </div>
-          <hr />
         </li>
       </ul>
     </div>
@@ -42,12 +41,13 @@
   
   <style scoped>
   .product-container{
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #FFF;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #FFF;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: fit-content;
   }
 
   h2 {
@@ -62,7 +62,27 @@
   }
 
   .product-item{
-     margin-bottom: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .info-produto{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 10px;
+  }
+  
+  .info-produto p{
+    margin: 0;
+    margin-bottom: 10px;
+    padding-left: 30px;
+    font-size: 30px;
   }
 
   .imagem {
@@ -72,9 +92,10 @@
   }
 
   .button-container{
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    margin-right: 50px;
+    flex-direction: column-reverse;
   }
 
    button {

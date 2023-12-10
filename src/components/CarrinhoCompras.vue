@@ -1,22 +1,22 @@
 <template>
     <div class="cart-container">
       <h2>Carrinho de Compras</h2>
-        <p>
-            Quantidade de Produtos no Carrinho: {{ qtdProdutosCarrinho }}
-        </p>
-        <p>
-            Valor Total: {{ valorTotal | dinheiro }}
-        </p>
       <ul class="cart-list">
         <li class="cart-item" v-for="item in carrinho" :key="item.produto.codigo">
-            <strong>Produto:</strong> {{ item.produto.nome }}<br />
-            <strong>Quantidade:</strong> {{ item.quantidade }}<br />
-            <strong>Preco:</strong> {{ item.preco | dinheiro }}<br />
+          <p><strong>Produto:</strong> {{ item.produto.nome }}</p>
+          <p><strong>Preco:</strong> {{ item.preco | dinheiro }}</p>
+          <p><strong>Quantidade:</strong> {{ item.quantidade }}
+            
+            <button @click="removerDoCarrinho(item.produto)">-</button>
+            <button class="mais" @click="adicionarAoCarrinho(item.produto)">+</button></p>
+          </li>
+        </ul>
+        
+        <div class="info">
+          <p>Produtos no Carrinho: {{ qtdProdutosCarrinho }}</p>
+          <p>Valor Total: {{ valorTotal | dinheiro }}</p>
+        </div>
 
-            <button @click="removerDoCarrinho(item.produto)">Remover Item</button>
-        <hr />
-        </li>
-      </ul>
     </div>
   </template>
   
@@ -39,6 +39,9 @@
         removerDoCarrinho(produto){
             // Lógica para remover um produto do carrinho
             this.$store.dispatch('removerDoCarrinho', produto)
+        },
+        adicionarAoCarrinho(produto){
+          this.$store.dispatch('comprarProduto', produto)
         }
     }
   };
@@ -46,7 +49,7 @@
   
   <style scoped>
 .cart-container{
-  max-width: 600px;
+  width: 550px;
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -54,11 +57,15 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
    color: #333
 }
-
-
 .cart-list{
   list-style: none;
   padding: 0;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .cart-item {
@@ -67,6 +74,14 @@
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cart-item p, .info p{
+  margin: 0;
+  margin-bottom: 20px;
 }
 
 button {
@@ -77,6 +92,12 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 44px;
+  margin-right: 10px;
+}
+
+button.mais{
+  background-color: #007bff;
 }
 
 button:hover {

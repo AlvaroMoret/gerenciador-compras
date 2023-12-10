@@ -1,5 +1,6 @@
 <template>
     <div class = "cadastro">
+
       <h2>Cadastro de Produto</h2>
       <form @submit.prevent="cadastrar" class="product-form">
 
@@ -19,13 +20,13 @@
           <label for="preco">Preço Unitário:</label>
           <input v-model="preco" type="number" step="0.01" id="preco" required />
         </div>
-        <div class = "form-group">
+        <!-- <div class = "form-group">
           <label  for="foto">Foto do Produto:</label>
-          <input @change="handleFotoChange" type="file" id="foto" accept="image/*"  style="display: none" />
+          <input type="file" id="foto" accept="image/*"  style="display: none" />
           <label for = "foto" class="custom-upload">
             <span> Selecionar arquivo</span>
           </label>
-        </div>
+        </div> -->
         <button class="botao-cadastrar" @click="cadastrar">Cadastrar Produto</button>
       </form>
     </div>
@@ -36,33 +37,35 @@
   import { mapActions } from "vuex";
 
   export default {
+    props: {
+      value: {
+        type: Boolean,
+        required: true,
+      },
+    },
     data(){
       return {
         codigo: "",
         nome: "",
         descricao: "",
         preco: null,
-        foto: "",
+        // foto: "",
       }
     },
     methods: {
       ...mapActions(['cadastrarProduto']),
       cadastrar() {
-        console.log('entrou')
         const produto = {
           codigo: this.codigo,
           nome: this.nome,
           descricao: this.descricao,
           preco: this.preco,
-          foto: this.foto,
+          // foto: this.foto,
         }
 
         this.$store.dispatch('cadastrarProduto', produto)
         
-      },
-      handleFotoChange(event) {
-        this.foto = event.target.files[0];
-      },
+      }
     },
   };
   </script>
@@ -70,7 +73,7 @@
 <style>
 
   .cadastro {
-  max-width: 400px;
+  width: 550px;
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -103,15 +106,6 @@
 .custom-upload  span{
   margin-left: 5px;
   color:#555;
-}
-custom-upload:houver{
-  background-color: #1060b6;
-}
-
-    label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #555;
 }
 
 input, textarea {

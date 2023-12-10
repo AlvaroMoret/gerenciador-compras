@@ -41,11 +41,13 @@ export default {
             if (index !== -1) {
                 state.produtosCarrinho.splice(index, 1);
             }
+        },
+        setCarrinho(state, payLoad){
+            state.produtosCarrinho = payLoad;
         }
     },
     actions:{
         comprarProduto(context, payLoad){
-            console.log('passou aqui')
             context.commit('comprarProduto',payLoad)
         },
         removerDoCarrinho(context, payLoad){
