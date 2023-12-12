@@ -1,4 +1,7 @@
-# gerenciador-compras
+# TEMA 2 - gerenciador-compras
+
+# Álvaro Moret Pinheiro
+# Mário Ribeiro Júnior
 
 ## Project setup
 ```
